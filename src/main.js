@@ -40,6 +40,7 @@ bot.on(message('voice'), async ctx => {
 		await ctx.reply(response.content)
 	} catch (e) {
 		console.log('Error while voice message', e.message)
+		ctx.reply('Ошибка')
 	}
 })
 
