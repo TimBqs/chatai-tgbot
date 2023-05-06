@@ -29,12 +29,11 @@ bot.on(message('voice'), async ctx => {
 		await ctx.reply(code('Сообщение получил, жду ответ от нашего крутого ИИ'))
 		const link = await ctx.telegram.getFileLink(ctx.message.voice.file_id)
 		const userId = String(ctx.message.from.id)
-		console.log(link.href)
 		const oggPath = await ogg.create(link, userId)
 		const mp3Path = await ogg.toMp3(oggPath, userId)
 		const text = await openai.transcription(mp3Path)
 		await ctx.reply(code(`Твой запрос: ${text}`))
-
+		ctx.session.messages.push({ role: openai.roles.USER, content: text })
 		const response = await openai.chat(ctx.session.messages)
 		ctx.session.messages.push({ role: openai.roles.ASSISTANT, content: response.content })
 		await ctx.reply(response.content)
