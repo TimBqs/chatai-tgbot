@@ -25,7 +25,7 @@ class OpenAi {
 
 			return response.data.choices[0].message
 		} catch (e) {
-			console.log('Error white get a answer for chatGPT', e)
+			console.log('Error white get a answer for chatGPT', e.message)
 		}
 	}
 
